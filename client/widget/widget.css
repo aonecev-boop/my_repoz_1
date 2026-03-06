@@ -1,0 +1,643 @@
+/* ============================================
+   АлИИна — Чат-виджет | Design System
+   ============================================ */
+
+:root {
+  /* Colors */
+  --color-primary: #8B6F47;
+  --color-primary-dark: #6B5235;
+  --color-primary-light: #C4A97D;
+  --color-secondary: #3D4F5F;
+  --color-accent: #D4A84B;
+
+  --color-bg-page: #F8F6F3;
+  --color-bg-widget: #FDFCFA;
+  --color-bg-bot-msg: #F3EDE4;
+  --color-bg-user-msg: #8B6F47;
+  --color-text-primary: #2D2D2D;
+  --color-text-secondary: #7A7A7A;
+  --color-border: #E8E2D9;
+
+  --color-success: #4CAF7D;
+  --color-error: #C75B39;
+  --color-warning: #E5A832;
+  --color-info: #5B8DB8;
+
+  /* Typography */
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-round: 50%;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-button: 0 4px 16px rgba(139, 111, 71, 0.3);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease-out;
+  --transition-slow: 0.35s ease-out;
+
+  /* Widget Sizes */
+  --widget-width: 400px;
+  --widget-height: 560px;
+  --widget-btn-size: 60px;
+  --widget-offset: 24px;
+}
+
+/* ============================================
+   Reset & Base
+   ============================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================
+   Floating Button
+   ============================================ */
+.aliina-floating-btn {
+  position: fixed;
+  bottom: var(--widget-offset);
+  right: var(--widget-offset);
+  width: var(--widget-btn-size);
+  height: var(--widget-btn-size);
+  border-radius: var(--radius-round);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-button);
+  z-index: 99998;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  animation: aliina-pulse-in 0.3s ease-out;
+}
+
+.aliina-floating-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(139, 111, 71, 0.4);
+}
+
+.aliina-floating-btn:active {
+  transform: scale(0.95);
+}
+
+.aliina-floating-btn svg {
+  width: 28px;
+  height: 28px;
+  fill: white;
+}
+
+.aliina-floating-btn .badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 16px;
+  height: 16px;
+  background: var(--color-error);
+  border-radius: var(--radius-round);
+  border: 2px solid white;
+  animation: aliina-badge-pop 0.3s ease-out;
+  display: none;
+}
+
+.aliina-floating-btn .badge.show {
+  display: block;
+}
+
+/* Pulse animation on initial load */
+.aliina-floating-btn::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--radius-round);
+  border: 2px solid var(--color-primary-light);
+  opacity: 0;
+  animation: aliina-ring-pulse 2s ease-out 1s 3;
+}
+
+/* ============================================
+   Chat Window
+   ============================================ */
+.aliina-chat {
+  position: fixed;
+  bottom: calc(var(--widget-offset) + var(--widget-btn-size) + 16px);
+  right: var(--widget-offset);
+  width: var(--widget-width);
+  height: var(--widget-height);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-widget);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 99999;
+  transform-origin: bottom right;
+  transition: transform var(--transition-normal), opacity var(--transition-normal);
+}
+
+.aliina-chat.hidden {
+  transform: scale(0.8);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ============================================
+   Header
+   ============================================ */
+.aliina-header {
+  height: 56px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.aliina-header-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-round);
+  background: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 16px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.aliina-header-info {
+  flex-grow: 1;
+}
+
+.aliina-header-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 15px;
+  color: white;
+  line-height: 1.2;
+}
+
+.aliina-header-status {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.aliina-header-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-round);
+  background: var(--color-success);
+  display: inline-block;
+}
+
+.aliina-header-btn {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.aliina-header-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.aliina-header-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: white;
+  stroke-width: 2;
+}
+
+.aliina-header-btn.tts svg {
+  width: 18px;
+  height: 18px;
+  stroke: rgba(255, 255, 255, 0.85);
+  fill: none;
+}
+
+.aliina-header-btn.tts:hover svg {
+  stroke: white;
+}
+
+/* ============================================
+   Messages Area
+   ============================================ */
+.aliina-messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--color-bg-widget);
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+.aliina-messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.aliina-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.aliina-messages::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+/* ============================================
+   Message Bubbles
+   ============================================ */
+.aliina-msg {
+  display: flex;
+  gap: 8px;
+  max-width: 85%;
+  animation: aliina-msg-in 0.25s ease-out;
+}
+
+.aliina-msg.bot {
+  align-self: flex-start;
+}
+
+.aliina-msg.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.aliina-msg-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-round);
+  background: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 12px;
+  color: white;
+  flex-shrink: 0;
+  align-self: flex-end;
+}
+
+.aliina-msg-bubble {
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.aliina-msg.bot .aliina-msg-bubble {
+  background: var(--color-bg-bot-msg);
+  color: var(--color-text-primary);
+  border-radius: 4px 16px 16px 16px;
+}
+
+.aliina-msg.user .aliina-msg-bubble {
+  background: var(--color-bg-user-msg);
+  color: white;
+  border-radius: 16px 4px 16px 16px;
+}
+
+.aliina-msg-time {
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.aliina-msg.bot .aliina-msg-time {
+  color: var(--color-text-secondary);
+}
+
+.aliina-msg.user .aliina-msg-time {
+  color: rgba(255, 255, 255, 0.7);
+  text-align: right;
+}
+
+/* ============================================
+   Typing Indicator
+   ============================================ */
+.aliina-typing {
+  display: flex;
+  gap: 8px;
+  align-self: flex-start;
+  align-items: flex-end;
+}
+
+.aliina-typing-dots {
+  background: var(--color-bg-bot-msg);
+  border-radius: 4px 16px 16px 16px;
+  padding: 12px 18px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.aliina-typing-dots span {
+  width: 7px;
+  height: 7px;
+  background: var(--color-text-secondary);
+  border-radius: var(--radius-round);
+  animation: aliina-dot-wave 1.2s ease-in-out infinite;
+}
+
+.aliina-typing-dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.aliina-typing-dots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* ============================================
+   Input Panel
+   ============================================ */
+.aliina-input-panel {
+  height: 56px;
+  background: white;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.aliina-input-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.aliina-input-btn:hover {
+  background: rgba(139, 111, 71, 0.08);
+}
+
+.aliina-input-btn:active {
+  transform: scale(0.92);
+}
+
+.aliina-input-btn svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--color-text-secondary);
+  fill: none;
+  stroke-width: 1.8;
+}
+
+.aliina-input-btn.send svg {
+  fill: var(--color-primary);
+  stroke: var(--color-primary);
+}
+
+.aliina-input-btn.send:disabled svg {
+  fill: var(--color-border);
+  stroke: var(--color-border);
+}
+
+.aliina-input-btn.recording {
+  position: relative;
+}
+
+.aliina-input-btn.recording::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: var(--radius-round);
+  border: 2px solid var(--color-error);
+  animation: aliina-mic-pulse 1.5s ease-in-out infinite;
+}
+
+.aliina-input-btn.recording svg {
+  stroke: var(--color-error);
+}
+
+.aliina-input-field {
+  flex-grow: 1;
+  height: 40px;
+  border: none;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-text-primary);
+  background: transparent;
+  padding: 0 8px;
+}
+
+.aliina-input-field::placeholder {
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
+   File Preview
+   ============================================ */
+.aliina-file-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--color-bg-bot-msg);
+  border-radius: var(--radius-sm);
+  margin: 0 8px 8px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--color-text-primary);
+}
+
+.aliina-file-preview .remove {
+  cursor: pointer;
+  color: var(--color-error);
+  font-weight: bold;
+  margin-left: auto;
+}
+
+/* ============================================
+   Network Error Bar
+   ============================================ */
+.aliina-error-bar {
+  background: var(--color-warning);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 12px;
+  text-align: center;
+  padding: 6px;
+  display: none;
+}
+
+.aliina-error-bar.show {
+  display: block;
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes aliina-pulse-in {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes aliina-ring-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes aliina-badge-pop {
+  0% {
+    transform: scale(0);
+  }
+
+  70% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes aliina-msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aliina-dot-wave {
+
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes aliina-mic-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 767px) {
+  .aliina-floating-btn {
+    width: 52px;
+    height: 52px;
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .aliina-floating-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .aliina-chat {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  .aliina-chat .aliina-header-close svg {
+    /* Replace X with back arrow on mobile */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .aliina-floating-btn {
+    width: 56px;
+    height: 56px;
+  }
+
+  .aliina-chat {
+    height: 500px;
+  }
+}
+
+/* ============================================
+   Reduced Motion
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

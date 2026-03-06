@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "skills": {
+    "api-security-hardening": {
+      "source": "aj-geddes/useful-ai-prompts",
+      "sourceType": "github",
+      "computedHash": "d6ce866c17f268a6eb86b7c2afc0c06178ca653cc8f655860a6997b4e6a11bcf"
+    },
+    "async-patterns": {
+      "source": "pluginagentmarketplace/custom-plugin-nodejs",
+      "sourceType": "github",
+      "computedHash": "d5c597e79bddbd4e51464afe9e1e3c688645aa4a41e323dd7b9d3d733122f4e8"
+    },
+    "code-review": {
+      "source": "mrgoonie/claudekit-skills",
+      "sourceType": "github",
+      "computedHash": "afd3255c87492a92dc86a0165108845ce546b8250650d677d82f0aa6463c0c5c"
+    },
+    "docker-deployment": {
+      "source": "pluginagentmarketplace/custom-plugin-nodejs",
+      "sourceType": "github",
+      "computedHash": "36827e3baf069aabe5d9032ba7f26bb07647bdd7ea1d8278348a7c4e54a853f8"
+    },
+    "frontend-css-patterns": {
+      "source": "majesticlabs-dev/majestic-marketplace",
+      "sourceType": "github",
+      "computedHash": "d26ef99581d6df03f92a7c8264ca4a16620558845644c3c87e7ae1045185ceb6"
+    },
+    "git-workflow": {
+      "source": "supercent-io/skills-template",
+      "sourceType": "github",
+      "computedHash": "4618639b500d7ffbeaba43d0e6f483bd5fcb46868578abcfff874ee0e3fc8d6d"
+    },
+    "jest-testing-expert": {
+      "source": "cin12211/orca-q",
+      "sourceType": "github",
+      "computedHash": "cce955dbbf891aa0e54ce68369e84e334da3545898618484fd314584a3f76dd8"
+    },
+    "openai-api": {
+      "source": "ovachiever/droid-tings",
+      "sourceType": "github",
+      "computedHash": "084378db9730cdf939117a14d0381eb8f8444f0088b9118ec18403efeace2cd1"
+    },
+    "performance-optimization": {
+      "source": "pluginagentmarketplace/custom-plugin-nodejs",
+      "sourceType": "github",
+      "computedHash": "85828e72835e37a9eb9ee0e35b7ba3a0cd1a655968fe11c99b4965a543eb2a7b"
+    },
+    "technical-writer": {
+      "source": "onewave-ai/claude-skills",
+      "sourceType": "github",
+      "computedHash": "606a9fa4645e984fe04b8668e4ca1b21d227c303addd4aba637c5bac9efa55e4"
+    }
+  }
+}
