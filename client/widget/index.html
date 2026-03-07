@@ -1,16 +1,206 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>АлИИна — Консультант</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>АлИИна — ИИ-консультант Встрой-Мебель.ру</title>
+  <meta name="description"
+    content="АлИИна — умный ИИ-консультант мебельной студии Встрой-Мебель.ру. Рассчитаем стоимость мебели и запишем на замер.">
+  <meta name="theme-color" content="#6B5235">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="widget.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
 </head>
+
 <body>
-  <div id="aliina-widget-root"></div>
-  <script src="widget.js"></script>
+  <div class="app" id="app">
+    <!-- Sidebar (desktop only) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">А</div>
+        <div class="sidebar-logo-text">
+          <span class="brand-name">АлИИна</span>
+          <span class="brand-sub">ИИ-консультант</span>
+        </div>
+      </div>
+
+      <div class="sidebar-info">
+        <div class="info-section">
+          <div class="info-icon">🏢</div>
+          <div class="info-content">
+            <h3>Мебельная Студия</h3>
+            <p>«Встрой-Мебель.ру»</p>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <div class="info-icon">🪑</div>
+          <div class="info-content">
+            <h3>Наши услуги</h3>
+            <ul>
+              <li>Шкафы-купе</li>
+              <li>Гардеробные</li>
+              <li>Распашные шкафы</li>
+              <li>Мебельные стенки</li>
+              <li>Прихожие</li>
+              <li>Детские комнаты</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <div class="info-icon">✨</div>
+          <div class="info-content">
+            <h3>Преимущества</h3>
+            <ul>
+              <li>Бесплатный замер</li>
+              <li>Изготовление на заказ</li>
+              <li>Монтаж включён</li>
+              <li>Гарантия качества</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="online-badge">
+          <span class="pulse-dot"></span>
+          Консультант онлайн
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header" id="mobile-header">
+      <div class="mobile-header-logo">
+        <div class="mobile-avatar">А</div>
+        <div>
+          <div class="mobile-title">АлИИна</div>
+          <div class="mobile-status">
+            <span class="pulse-dot-sm"></span>
+            Онлайн
+          </div>
+        </div>
+      </div>
+      <button class="mobile-info-btn" id="mobile-info-btn" aria-label="Информация">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="16" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12.01" y2="8" />
+        </svg>
+      </button>
+    </header>
+
+    <!-- Chat Area -->
+    <main class="chat-area" id="chat-area">
+      <!-- Chat Header (desktop) -->
+      <div class="chat-header" id="chat-header">
+        <div class="chat-header-info">
+          <div class="chat-avatar">А</div>
+          <div>
+            <div class="chat-title">Чат с АлИИной</div>
+            <div class="chat-subtitle">Мебельная студия Встрой-Мебель.ру</div>
+          </div>
+        </div>
+        <button class="new-chat-btn" id="new-chat-btn" title="Новый чат">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+          </svg>
+          <span>Новый чат</span>
+        </button>
+      </div>
+
+      <!-- Error Bar -->
+      <div class="error-bar" id="error-bar">Нет связи. Переподключение...</div>
+
+      <!-- Messages -->
+      <div class="messages" id="messages" role="log" aria-live="polite"></div>
+
+
+
+      <!-- File Preview -->
+      <div id="file-area"></div>
+
+      <!-- Input Panel -->
+      <div class="input-panel" id="input-panel">
+        <button class="input-btn attach-btn" id="attach-btn" aria-label="Прикрепить файл">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path
+              d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+          </svg>
+        </button>
+        <div class="input-wrapper">
+          <input type="text" class="input-field" id="input-field" placeholder="Введите сообщение..." maxlength="2000"
+            aria-label="Поле ввода сообщения" autocomplete="off">
+        </div>
+
+        <button class="input-btn send-btn" id="send-btn" aria-label="Отправить" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M22 2L11 13" />
+            <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+          </svg>
+        </button>
+      </div>
+      <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.pdf" style="display:none">
+    </main>
+  </div>
+
+  <!-- Mobile Info Panel (overlay) -->
+  <div class="mobile-info-overlay hidden" id="mobile-info-overlay">
+    <div class="mobile-info-panel">
+      <div class="mobile-info-header">
+        <h2>О компании</h2>
+        <button class="close-info-btn" id="close-info-btn" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="mobile-info-body">
+        <div class="info-section">
+          <div class="info-icon">🏢</div>
+          <div class="info-content">
+            <h3>Мебельная Студия</h3>
+            <p>«Встрой-Мебель.ру»</p>
+          </div>
+        </div>
+        <div class="info-section">
+          <div class="info-icon">🪑</div>
+          <div class="info-content">
+            <h3>Наши услуги</h3>
+            <ul>
+              <li>Шкафы-купе</li>
+              <li>Гардеробные</li>
+              <li>Распашные шкафы</li>
+              <li>Мебельные стенки</li>
+              <li>Прихожие</li>
+              <li>Детские комнаты</li>
+            </ul>
+          </div>
+        </div>
+        <div class="info-section">
+          <div class="info-icon">✨</div>
+          <div class="info-content">
+            <h3>Преимущества</h3>
+            <ul>
+              <li>Бесплатный замер</li>
+              <li>Изготовление на заказ</li>
+              <li>Монтаж включён</li>
+              <li>Гарантия качества</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
+
 </html>

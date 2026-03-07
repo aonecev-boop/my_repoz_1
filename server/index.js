@@ -10,6 +10,7 @@ const logger = require('./utils/logger');
 // Routes
 const chatRouter = require('./routes/chat');
 const uploadRouter = require('./routes/upload');
+const voiceRouter = require('./routes/voice');
 const { router: adminRouter, initAdmin } = require('./routes/admin');
 
 const app = express();
@@ -30,26 +31,19 @@ app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // === STATIC FILES ===
-app.use('/widget', express.static(config.paths.clientWidget));
+// Main app (chat) — served from client/widget
+app.use('/', express.static(config.paths.clientWidget));
 app.use('/admin', express.static(config.paths.clientAdmin));
 
 // === API ROUTES ===
 app.use('/api/chat', chatLimiter, chatRouter);
 app.use('/api/upload', chatLimiter, uploadRouter);
+app.use('/api/voice', chatLimiter, voiceRouter);
 app.use('/api/admin', adminRouter);
 
-// === ROOT ===
+// === ROOT (fallback for SPA) ===
 app.get('/', (req, res) => {
-    res.json({
-        name: 'АлИИна — ИИ-консультант',
-        status: 'running',
-        version: '1.0.0',
-    });
-});
-
-// === EMBED SCRIPT ===
-app.get('/embed.js', (req, res) => {
-    res.sendFile(path.join(config.paths.clientWidget, 'embed.js'));
+    res.sendFile(path.join(config.paths.clientWidget, 'index.html'));
 });
 
 // === ERROR HANDLER ===
@@ -68,9 +62,10 @@ function start() {
 
     app.listen(config.port, () => {
         logger.info(`Server started on port ${config.port}`);
-        logger.info(`Widget: http://localhost:${config.port}/widget/`);
+        logger.info(`Chat App: http://localhost:${config.port}/`);
         logger.info(`Admin: http://localhost:${config.port}/admin/`);
         logger.info(`API: http://localhost:${config.port}/api/chat`);
+        logger.info(`Voice API: http://localhost:${config.port}/api/voice`);
     });
 }
 

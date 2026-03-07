@@ -58,6 +58,7 @@ router.get('/db/:dbName', (req, res) => {
         'price-category': 'priceCategory',
         'company-info': 'companyInfo',
         'exception': 'exception',
+        'algorithms': 'algorithms',
     };
 
     const key = keyMap[dbName];
@@ -74,6 +75,7 @@ router.put('/db/:dbName', (req, res) => {
         'price-category': 'priceCategory',
         'company-info': 'companyInfo',
         'exception': 'exception',
+        'algorithms': 'algorithms',
     };
 
     const key = keyMap[dbName];

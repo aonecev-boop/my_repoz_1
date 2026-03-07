@@ -39,6 +39,7 @@ module.exports = {
     priceCategory: 'db-price-category.json',
     companyInfo: 'db-company-info.json',
     exception: 'db-exception.json',
+    algorithms: 'db-algorithms.json',
     sqlite: 'database.sqlite',
   },
 

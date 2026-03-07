@@ -11,6 +11,7 @@ class DatabaseManager {
             priceCategory: config.db.priceCategory,
             companyInfo: config.db.companyInfo,
             exception: config.db.exception,
+            algorithms: config.db.algorithms,
         };
     }
 

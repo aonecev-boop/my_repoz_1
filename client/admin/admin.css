@@ -274,12 +274,32 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+    gap: 12px;
 }
 
 .card-title {
     font-family: var(--font-heading);
     font-size: 16px;
     font-weight: 600;
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
+}
+
+/* Algorithm card — title input full width */
+.algo-card .card-header>div:first-child {
+    flex: 1;
+    min-width: 0;
+}
+
+.algo-title-input {
+    width: 100% !important;
+}
+
+/* Sidebar nav — ensure labels aren't clipped */
+.sidebar-nav li span {
+    white-space: nowrap;
+    overflow: visible;
 }
 
 /* Tables */
@@ -568,22 +588,110 @@ body {
     margin-top: 4px;
 }
 
+/* Algo cards */
+.algo-card {
+    transition: box-shadow 0.15s ease;
+}
+
+.algo-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.algo-card .card-header {
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Mobile hamburger */
+.mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1001;
+    width: 40px;
+    height: 40px;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .sidebar {
-        width: 60px;
+        position: fixed;
+        left: -260px;
+        top: 0;
+        bottom: 0;
+        width: 220px;
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.open {
+        left: 0;
     }
 
     .sidebar-brand,
     .sidebar-nav li span {
-        display: none;
+        display: inline;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
     }
 
     .main-content {
         padding: 16px;
+        margin-top: 50px;
     }
 
     .dialogs-layout {
         grid-template-columns: 1fr;
+    }
+
+    .page-title {
+        font-size: 20px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .data-table {
+        font-size: 12px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 8px 6px;
+    }
+
+    .algo-card .card-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .algo-card .card-header>div:last-child {
+        justify-content: flex-end;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebar {
+        width: 180px;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .dialogs-layout {
+        grid-template-columns: 240px 1fr;
     }
 }
